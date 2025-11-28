@@ -7,32 +7,59 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.0] - 2024-11-27
 
-### Added
-- Initial release of Email X-Ray
-- Real-time email scanning for Gmail and Yahoo Mail
-- Detection of hidden text (0px font, opacity 0, visibility hidden)
-- Detection of tracking pixels (1x1 images)
-- Detection of suspicious links (data URLs, JavaScript URLs, URL mismatches)
-- Homograph attack detection (lookalike Unicode characters)
-- Invisible iframe detection
-- Zero-width character detection
-- Suspicious image metadata detection (long alt text)
-- Color camouflage detection (text color matching background)
-- Visual highlighting with severity levels (Critical, Warning, Info)
-- Interactive results panel with detailed findings
-- Export scan results as JSON
-- Keyboard shortcut support (⌘+⇧+X / Ctrl+Shift+X)
-- Clean, modern UI with gradient design
-- Minimal permissions (Gmail and Yahoo Mail only)
-- Content Security Policy enforcement
-- Privacy-first design (100% local processing)
+### Added (Enhancements from Initial Draft)
+- **Enhanced Detection Engine**: Expanded from basic hidden text detection to 8 comprehensive threat types
+- **Homograph Attack Detection**: Added detection for lookalike Unicode characters (Cyrillic, Greek confusables)
+- **Invisible iFrame Detection**: Added detection for hidden credential harvesting attempts
+- **Zero-Width Character Detection**: Added scanning for invisible Unicode characters (U+200B-U+200D, etc.)
+- **Link Analysis**: Added detection for JavaScript URLs, data URLs, and URL/text mismatches
+- **Suspicious Image Detection**: Added scanning for long alt text on hidden images
+- **Color Camouflage Detection**: Enhanced to detect text color matching background color
+- **Off-Screen Positioning Detection**: Added detection for text-indent and absolute positioning tricks
 
-### Security
-- No data collection or transmission
-- All processing happens locally in browser
-- Strict CSP prevents code injection
-- Minimal host permissions
-- No external dependencies
+### Enhanced (Improvements to Initial Draft)
+- **Gmail/Yahoo Specific Selectors**: Optimized DOM targeting for both email platforms
+- **Severity Classification System**: Added three-tier system (Critical/Warning/Info) vs. single severity
+- **Interactive Results Panel**: 
+  - Added statistics dashboard with color-coded counts
+  - Click findings to scroll to elements in email
+  - Minimize/maximize controls
+  - Professional gradient design
+- **Visual Highlighting**: 
+  - Color-coded by severity (red/orange/blue)
+  - Hover effects and animations
+  - Pulse animation when scrolling to elements
+- **Export Functionality**: Added JSON export with structured findings data
+- **Keyboard Shortcut**: Added ⌘+Shift+X / Ctrl+Shift+X quick scan
+- **Performance**: Optimized DOM traversal using TreeWalker API
+- **Error Handling**: Added comprehensive error handling and user feedback
+
+### Security Improvements
+- **Content Security Policy**: Enforced strict CSP in manifest
+- **Minimal Permissions**: Restricted to only Gmail and Yahoo Mail domains (no `<all_urls>`)
+- **Host Permissions**: Changed from broad permissions to specific host_permissions
+- **Storage Permission**: Added for future user preferences (not yet implemented)
+
+### UI/UX Improvements
+- **Modern Design**: Professional gradient design (purple/violet theme)
+- **Responsive Panel**: Max-height with scrolling, better positioning
+- **Status Feedback**: Clear scanning/success/error states in popup
+- **Accessibility**: Better color contrast and readable fonts
+- **macOS Integration**: Native-style aesthetics for macOS Chrome
+
+### Documentation
+- Comprehensive README with feature descriptions and usage guide
+- Detailed INSTALLATION guide with troubleshooting
+- CONTRIBUTING guidelines for open source collaboration
+- SECURITY policy for vulnerability disclosure
+- Clear LICENSE (MIT)
+
+### Initial Draft Features (Retained)
+- Hidden text detection (0px font, opacity 0, visibility hidden)
+- Tracking pixel detection (1x1 images)
+- Summary panel with findings list
+- Element highlighting on page
+- Close/remove panel functionality
 
 ---
 
