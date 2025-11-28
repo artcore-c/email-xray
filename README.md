@@ -38,7 +38,7 @@ Email X-Ray is a security-focused Chrome extension that helps you detect sophist
 
 1. **Clone this repository**:
    ```bash
-   git clone https://github.com/yourusername/email-xray.git
+   git clone https://github.com/artcore-c/email-xray.git
    cd email-xray
    ```
 
@@ -210,4 +210,4 @@ Created by Robert - [YouTube Tutorials](#) (coming soon)
 
 ---
 
-**⚠️ Security Notice**: If you discover a security vulnerability, please email security@example.com instead of opening a public issue.
+**⚠️ Security Notice**: If you discover a security vulnerability, please contact your email provider instead of opening a public issue.
