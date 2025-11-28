@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.0] - 2024-11-27
 
-### Added (Enhancements from Initial Draft)
+### Added (Additional Security Enhancements from previous 0.0.9)
 - **Enhanced Detection Engine**: Expanded from basic hidden text detection to 8 comprehensive threat types
 - **Homograph Attack Detection**: Added detection for lookalike Unicode characters (Cyrillic, Greek confusables)
 - **Invisible iFrame Detection**: Added detection for hidden credential harvesting attempts
@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Color Camouflage Detection**: Enhanced to detect text color matching background color
 - **Off-Screen Positioning Detection**: Added detection for text-indent and absolute positioning tricks
 
-### Enhanced (Improvements to Initial Draft)
+### Changes (GUI Improvements to previous 0.0.9)
 - **Gmail/Yahoo Specific Selectors**: Optimized DOM targeting for both email platforms
 - **Severity Classification System**: Added three-tier system (Critical/Warning/Info) vs. single severity
 - **Interactive Results Panel**: 
@@ -54,7 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - SECURITY policy for vulnerability disclosure
 - Clear LICENSE (MIT)
 
-### Initial Draft Features (Retained)
+### Core Features (Retained)
 - Hidden text detection (0px font, opacity 0, visibility hidden)
 - Tracking pixel detection (1x1 images)
 - Summary panel with findings list
