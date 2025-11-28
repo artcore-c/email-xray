@@ -171,6 +171,16 @@ Test on sample phishing emails or create test cases with:
 - Images with `width="1" height="1"`
 - Text with zero-width characters: `Hello\u200BWorld`
 
+## Screenshots
+
+### Detection in Action
+
+![Email X-Ray detecting hidden content in spam email](demo.jpeg)
+
+The extension showing hidden CSS in a phishing email, 
+highlighting suspicious elements and providing detailed analysis in 
+the results panel.
+
 ## Roadmap
 
 - [ ] Support for additional webmail platforms (Outlook.com, ProtonMail)
