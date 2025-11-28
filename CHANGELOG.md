@@ -85,5 +85,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[Unreleased]: https://github.com/yourusername/email-xray/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/yourusername/email-xray/releases/tag/v1.0.0
+[Unreleased]: https://github.com/artcore-c/email-xray/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/artcore-c/email-xray/releases/tag/v1.0.0
