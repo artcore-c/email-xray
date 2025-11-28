@@ -3,7 +3,7 @@
   "name": "Email X-Ray",
   "description": "Detect hidden phishing tactics in emails: invisible text, tracking pixels, homograph attacks, and suspicious metadata.",
   "version": "1.0.0",
-  "author": "Robert",
+  "author": "Robert Hall",
   
   "permissions": [
     "activeTab",
