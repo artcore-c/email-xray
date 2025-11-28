@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "Email X-Ray",
+  "description": "Detect hidden phishing tactics in emails: invisible text, tracking pixels, homograph attacks, and suspicious metadata.",
+  "version": "1.0.0",
+  "author": "Robert",
+  
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  
+  "host_permissions": [
+    "https://mail.google.com/*",
+    "https://mail.yahoo.com/*"
+  ],
+  
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Email X-Ray - Scan for Hidden Threats"
+  },
+  
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  
+  "content_scripts": [
+    {
+      "matches": [
+        "https://mail.google.com/*",
+        "https://mail.yahoo.com/*"
+      ],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  
+  "commands": {
+    "scan-email": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+X",
+        "mac": "Command+Shift+X"
+      },
+      "description": "Scan current email for hidden threats"
+    }
+  },
+  
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}
