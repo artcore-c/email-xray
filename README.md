@@ -1,6 +1,6 @@
 # 🔍 Email X-Ray
 
-**A Chrome extension to detect hidden phishing tactics in Gmail and Yahoo Mail**
+**A Chrome extension to detect hidden text in email**
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
