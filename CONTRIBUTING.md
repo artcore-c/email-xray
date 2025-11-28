@@ -14,7 +14,7 @@ Thank you for your interest in contributing to Email X-Ray! This document provid
 
 If you find a bug:
 
-1. Check if it's already reported in [Issues](https://github.com/yourusername/email-xray/issues)
+1. Check if it's already reported in [Issues](https://github.com/artcore-c/email-xray/issues)
 2. If not, create a new issue with:
    - Clear title and description
    - Steps to reproduce
@@ -63,7 +63,7 @@ Feature requests are welcome! Please:
 
 1. Clone your fork:
    ```bash
-   git clone https://github.com/yourusername/email-xray.git
+   git clone https://github.com/artcore-c/email-xray.git
    cd email-xray
    ```
 
