@@ -175,7 +175,7 @@ Test on sample phishing emails or create test cases with:
 
 ### Detection in Action
 
-![Email X-Ray detecting hidden content in spam email](demo.jpeg)
+![Email X-Ray detecting hidden content in spam email](demo.jpg)
 
 The extension showing hidden CSS in a phishing email, 
 highlighting suspicious elements and providing detailed analysis in 
