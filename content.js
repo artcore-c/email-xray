@@ -102,6 +102,16 @@ const EXR = {
     
     console.log(`[Email X-Ray] Scanning ${emailService}...`);
     
+    // Abort scan if Gmail is not displaying a message
+    if (emailService === 'gmail') {
+      const readingView = document.querySelector('.aeH .adn');
+      if (!readingView) {
+        console.warn('[Email X-Ray] Gmail message view not detected.');
+        this.scanInProgress = false;
+        return;
+      }
+    }
+    
     const selectors = this.SELECTORS[emailService];
     const emailBody = document.querySelector(selectors.emailBody);
     
@@ -119,6 +129,8 @@ const EXR = {
     this.scanForInvisibleIframes(emailBody);
     this.scanForZeroWidthChars(emailBody);
     this.scanForSuspiciousImages(emailBody);
+    this.scanForUnsubscribeSpoof(emailBody);
+    await this.scanForReplyToSpoofing();
     
     // Display results
     this.displayResults();
@@ -188,6 +200,24 @@ const EXR = {
         });
       }
       
+      // filter: blur(0px) brightness(0%)/backdrop-filter
+      if (cs.filter && cs.filter !== 'none') {
+        threats.push({
+          type: 'hidden-text',
+          reason: `CSS filter used (${cs.filter})`,
+          severity: this.SEVERITY.INFO
+        });
+      }
+      
+      // mix-blend-mode: difference
+      if (cs.mixBlendMode && cs.mixBlendMode !== 'normal') {
+        threats.push({
+          type: 'hidden-text',
+          reason: `Blend mode '${cs.mixBlendMode}' may conceal text`,
+          severity: this.SEVERITY.WARNING
+        });
+      }
+      
       // Color camouflage detection
       if (this.colorsAreSimilar(cs.color, cs.backgroundColor)) {
         threats.push({
@@ -235,22 +265,93 @@ const EXR = {
     }
   },
   
-  // Detection: Tracking pixels (1x1 images)
+  // Detection: Tracking pixels (1x1 images, SVGs, CSS backgrounds)
   scanForTrackingPixels(container) {
+    // Check traditional img tags
     const images = container.querySelectorAll('img');
-    
+  
     images.forEach(img => {
+      const cs = getComputedStyle(img);
       const width = img.width || parseInt(img.getAttribute('width')) || 0;
       const height = img.height || parseInt(img.getAttribute('height')) || 0;
+      const src = img.src || img.getAttribute('src') || '';
+      const threats = [];
       
+      // Traditional 1x1 or 2x2 tracking pixels
       if ((width === 1 && height === 1) || (width <= 2 && height <= 2)) {
-        const src = img.src || img.getAttribute('src') || '';
-        
-        this.addFinding(img, [{
+        threats.push({
           type: 'tracking-pixel',
           reason: `Tracking pixel detected (${width}x${height})`,
           severity: this.SEVERITY.WARNING
-        }], `Source: ${src.substring(0, 100)}`, this.SEVERITY.WARNING);
+        });
+      }
+      
+      // CSS background-image on img tags
+      const bg = cs.backgroundImage;
+      if (bg && bg.includes('url(') && bg !== 'none') {
+        threats.push({
+          type: 'tracking-pixel',
+          reason: 'CSS background-image may be a tracking pixel',
+          severity: this.SEVERITY.WARNING
+        });
+      }
+      
+      if (threats.length > 0) {
+        this.addFinding(img, threats, `Source: ${src.substring(0, 100)}`, this.SEVERITY.WARNING);
+      }
+    });
+    
+    // Also check SVG elements directly
+    const svgs = container.querySelectorAll('svg');
+    svgs.forEach(svg => {
+      const cs = getComputedStyle(svg);
+      const width = parseInt(svg.getAttribute('width')) || 0;
+      const height = parseInt(svg.getAttribute('height')) || 0;
+      const viewBox = svg.getAttribute('viewBox');
+      
+      // SVG with 0 dimensions but has viewBox (hidden tracking)
+      if ((width === 0 || height === 0) && viewBox) {
+        this.addFinding(svg, [{
+          type: 'tracking-pixel',
+          reason: 'SVG with zero dimensions but active viewBox (tracking)',
+          severity: this.SEVERITY.WARNING
+        }], `ViewBox: ${viewBox}`, this.SEVERITY.WARNING);
+      }
+      
+      // Check for remote image references in SVG
+      const svgImages = svg.querySelectorAll('image');
+      svgImages.forEach(svgImg => {
+        const href = svgImg.getAttribute('href') || svgImg.getAttribute('xlink:href') || '';
+        if (href.startsWith('http://') || href.startsWith('https://')) {
+          this.addFinding(svgImg, [{
+            type: 'tracking-pixel',
+            reason: 'SVG <image> references remote server (tracking)',
+            severity: this.SEVERITY.WARNING
+          }], `Remote: ${href.substring(0, 100)}`, this.SEVERITY.WARNING);
+        }
+      });
+    });
+    
+    // Check elements with CSS background-image (not just img tags)
+    const allElements = container.querySelectorAll('*');
+    allElements.forEach(el => {
+      if (el.tagName === 'IMG' || el.tagName === 'SVG') return; // Already checked
+      
+      const cs = getComputedStyle(el);
+      const bg = cs.backgroundImage;
+      
+      if (bg && bg.includes('url(') && bg !== 'none') {
+        const width = el.offsetWidth || 0;
+        const height = el.offsetHeight || 0;
+        
+        // Flag small or hidden elements with background images
+        if ((width <= 2 && height <= 2) || cs.display === 'none' || parseFloat(cs.opacity) === 0) {
+          this.addFinding(el, [{
+            type: 'tracking-pixel',
+            reason: 'Hidden element with CSS background-image (tracking)',
+            severity: this.SEVERITY.WARNING
+          }], `Background: ${bg.substring(0, 100)}`, this.SEVERITY.WARNING);
+        }
       }
     });
   },
@@ -300,6 +401,88 @@ const EXR = {
         });
       }
       
+      // Extract domain safely
+      let domain = '';
+      try {
+        domain = new URL(href).hostname.toLowerCase();
+      } catch {}
+      
+      // --- URL REPUTATION HEURISTICS ---
+      
+      // Excessive dashes (---)
+      if (domain.match(/-{3,}/)) {
+        threats.push({
+          type: 'suspicious-link',
+          reason: 'Domain contains excessive dashes (---)',
+          severity: this.SEVERITY.WARNING
+        });
+      }
+      
+      // Long numeric sequences (likely random generated subdomains)
+      if (domain.match(/[0-9]{6,}/)) {
+        threats.push({
+          type: 'suspicious-link',
+          reason: 'Domain contains long numeric sequence (likely auto-generated)',
+          severity: this.SEVERITY.WARNING
+        });
+      }
+      
+      // Suspicious/abused TLDs
+      const suspiciousTLDs = [
+        '.top', '.xyz', '.rest', '.click', '.link', '.work', '.shop', '.buzz',
+        '.space', '.online', '.gq', '.ml', '.cf', '.ga', '.tk', '.bid', '.country'
+      ];
+      if (suspiciousTLDs.some(tld => domain.endsWith(tld))) {
+        const tld = domain.split('.').pop();
+        threats.push({
+          type: 'suspicious-link',
+          reason: `Suspicious TLD (.${tld}) often used in phishing`,
+          severity: this.SEVERITY.WARNING
+        });
+      }
+      
+      // Excessive subdomain depth (e.g., login.verify.account.security.example.com)
+      const parts = domain.split('.');
+        if (parts.length > 5) {
+        threats.push({
+          type: 'suspicious-link',
+          reason: `Excessively long domain chain (${parts.length} subdomains)`,
+          severity: this.SEVERITY.WARNING
+        });
+      }
+      
+      // Brand impersonation pattern: known brand appears AFTER an unknown domain
+      // Example: secure.login.amazon.verifyaccount.ru
+      const famousBrands = [
+        'amazon', 'apple', 'paypal', 'microsoft', 'google', 'bankofamerica',
+        'chase', 'facebook', 'instagram'
+      ];
+      const brandMatch = famousBrands.find(b => domain.includes(b));
+      
+      if (brandMatch) {
+        const endsCorrectly =
+          domain.endsWith(`${brandMatch}.com`) ||
+          domain.endsWith(`${brandMatch}.net`) ||
+          domain.endsWith(`${brandMatch}.org`);
+        
+        if (!endsCorrectly) {
+          threats.push({
+            type: 'suspicious-link',
+            reason: `Brand name "${brandMatch}" used in non-official domain`,
+            severity: this.SEVERITY.CRITICAL
+          });
+        }
+      }
+      
+      // At-symbol in link text or href (encoding tricks: foo@bar.com inside URL)
+      if (href.includes('@') && !href.startsWith('mailto:')) {
+        threats.push({
+          type: 'suspicious-link',
+          reason: 'URL contains @ symbol (possible obfuscation)',
+          severity: this.SEVERITY.WARNING
+        });
+      }
+      
       if (threats.length > 0) {
         const highestSeverity = this.getHighestSeverity(threats.map(t => t.severity));
         this.addFinding(link, threats, `Link: ${href.substring(0, 100)}`, highestSeverity);
@@ -316,7 +499,11 @@ const EXR = {
       const displayText = link.textContent.trim();
       
       // Check for confusable characters in URLs
-      const confusableCount = this.countConfusableChars(href + displayText);
+      const text = href + displayText;
+      const normalized = text.normalize('NFKC');
+    
+      // Count confusables in both original and normalized forms
+      const confusableCount = this.countConfusableChars(text) + this.countConfusableChars(normalized);
       
       if (confusableCount > 2) {
         this.addFinding(link, [{
@@ -413,7 +600,7 @@ const EXR = {
       }
       
       // Zero-width chars in alt text
-      if (this.ZERO_WIDTH_CHARS.test(alt)) {
+      if (alt.match(this.ZERO_WIDTH_CHARS)) {
         this.addFinding(img, [{
           type: 'zero-width-chars',
           reason: 'Alt text contains zero-width characters',
@@ -462,11 +649,18 @@ const EXR = {
   
   // Helper: Count confusable characters
   countConfusableChars(text) {
+    if (!text) return 0;
+    
     let count = 0;
-    for (let char of text) {
+    const seen = new Set(); // Avoid counting same char position twice
+    
+    for (let i = 0; i < text.length; i++) {
+      const char = text[i];
       for (let normal in this.CONFUSABLES) {
-        if (this.CONFUSABLES[normal].includes(char)) {
+        if (this.CONFUSABLES[normal].includes(char) && !seen.has(i)) {
           count++;
+          seen.add(i);
+          break; // Don't count same char multiple times
         }
       }
     }
@@ -498,6 +692,176 @@ const EXR = {
     if (severities.includes(this.SEVERITY.CRITICAL)) return this.SEVERITY.CRITICAL;
     if (severities.includes(this.SEVERITY.WARNING)) return this.SEVERITY.WARNING;
     return this.SEVERITY.INFO;
+  },
+  
+  // Detection: Unsubscribe link spoofing
+  scanForUnsubscribeSpoof(container) {
+    // Find all links with "unsubscribe" text
+    const links = container.querySelectorAll('a');
+    
+    links.forEach(link => {
+      const text = link.textContent.toLowerCase();
+      const href = link.getAttribute('href') || '';
+      
+      if (!text.includes('unsubscribe') && !text.includes('opt-out') && !text.includes('opt out')) {
+        return; // Not an unsubscribe link
+      }
+      
+      const threats = [];
+      
+      // JavaScript unsubscribe trap
+      if (href.toLowerCase().startsWith('javascript:')) {
+        threats.push({
+          type: 'unsubscribe-spoof',
+          reason: 'Unsubscribe link uses JavaScript (potential trap)',
+          severity: this.SEVERITY.CRITICAL
+        });
+      }
+      
+      // Data URL unsubscribe (fake form)
+      if (href.startsWith('data:')) {
+        threats.push({
+          type: 'unsubscribe-spoof',
+          reason: 'Unsubscribe link uses data: URL (fake form)',
+          severity: this.SEVERITY.CRITICAL
+        });
+      }
+      
+      // Extract domain
+      let domain = '';
+      try {
+        domain = new URL(href).hostname.toLowerCase();
+      } catch {
+        return;
+      }
+      
+      // Suspicious TLDs for unsubscribe links
+      const suspiciousTLDs = ['.top', '.xyz', '.click', '.link', '.tk', '.ml', '.ga'];
+      if (suspiciousTLDs.some(tld => domain.endsWith(tld))) {
+        threats.push({
+          type: 'unsubscribe-spoof',
+          reason: `Unsubscribe link goes to suspicious domain (.${domain.split('.').pop()})`,
+          severity: this.SEVERITY.WARNING
+        });
+      }
+      
+      // Check if unsubscribe domain differs from sender domain
+      // (You'd need to extract sender domain from headers - complex)
+      
+      if (threats.length > 0) {
+        this.addFinding(link, threats, `Unsubscribe: ${href.substring(0, 100)}`, this.getHighestSeverity(threats.map(t => t.severity)));
+      }
+    });
+    
+    // Check for fake unsubscribe forms (form elements in email body)
+    const forms = container.querySelectorAll('form');
+    forms.forEach(form => {
+      const formText = form.textContent.toLowerCase();
+      if (formText.includes('unsubscribe') || formText.includes('opt-out')) {
+        this.addFinding(form, [{
+          type: 'unsubscribe-spoof',
+          reason: 'Email contains unsubscribe form (potential phishing - legitimate emails use links)',
+          severity: this.SEVERITY.WARNING
+        }], formText.substring(0, 100), this.SEVERITY.WARNING);
+      }
+    });
+  },
+
+  // Detection: Reply-To spoofing
+  async scanForReplyToSpoofing() {
+    const emailService = this.detectEmailService();
+    if (!emailService) return;
+    
+    let fromText = '';
+    let replyToText = '';
+    
+    // --- Gmail extraction ---
+    if (emailService === 'gmail') {
+      const fromNode = document.querySelector('.gD');           // visible sender
+      const replyNode = document.querySelector('.g2');          // reply-to entry
+      
+      if (fromNode) fromText = fromNode.getAttribute('email') || fromNode.textContent.trim();
+      if (replyNode) replyToText = replyNode.getAttribute('email') || replyNode.textContent.trim();
+    }
+    
+    // --- Yahoo Mail extraction ---
+    if (emailService === 'yahoo') {
+      const fromNode = document.querySelector('[data-test-id="message-view-sender-email"]');
+      const replyNode = document.querySelector('[data-test-id="message-view-reply-to-email"]');
+      
+      if (fromNode) fromText = fromNode.textContent.trim();
+      if (replyNode) replyToText = replyNode.textContent.trim();
+    }
+    
+    // If no Reply-To field present, nothing to check
+    if (!replyToText || !fromText) return;
+    
+    const threats = [];
+    
+    // Normalize
+    const fromLower = fromText.toLowerCase();
+    const replyLower = replyToText.toLowerCase();
+    
+    // 1. Direct mismatch but same "brand"
+    // Example:
+    // FROM: paypal.com
+    // REPLY-TO: support-paypal-secure.com
+    let fromDomain = fromLower.split('@')[1] || '';
+    let replyDomain = replyLower.split('@')[1] || '';
+    
+    if (fromDomain && replyDomain && fromDomain !== replyDomain) {
+      // If one domain contains the other → high suspicion
+      const baseFrom = fromDomain.replace(/^www\./, '');
+      const baseReply = replyDomain.replace(/^www\./, '');
+      
+      const similar =
+        baseFrom.includes(baseReply.split('.')[0]) ||
+        baseReply.includes(baseFrom.split('.')[0]);
+      
+      threats.push({
+        type: 'reply-to-spoof',
+        reason: similar
+          ? `Reply-To domain mimics sender domain (${replyDomain})`
+          : `Reply-To domain differs from sender domain (${fromDomain} → ${replyDomain})`,
+        severity: similar ? this.SEVERITY.CRITICAL : this.SEVERITY.WARNING
+      });
+    }
+    
+    // 2. "NOREPLY" / "info" sender → but reply goes to a person
+    if (fromLower.includes('noreply') && !replyLower.includes('noreply')) {
+      threats.push({
+        type: 'reply-to-spoof',
+        reason: `Email claims to be no-reply but replies go to a real mailbox (${replyLower})`,
+        severity: this.SEVERITY.WARNING
+      });
+    }
+    
+    // 3. Free-mail mismatch (classic fraud pattern)
+    // FROM: support@paypal.com
+    // REPLY-TO: paypal.support@outlook.com
+    const freeMail = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com', 'live.com', 'aol.com'];
+    
+    const replyIsFree = freeMail.includes(replyDomain);
+    const fromIsCorp = !freeMail.includes(fromDomain);
+    
+    if (replyIsFree && fromIsCorp) {
+      threats.push({
+        type: 'reply-to-spoof',
+        reason: `Corporate sender but reply-to is a free email service (${replyDomain})`,
+        severity: this.SEVERITY.CRITICAL
+      });
+    }
+    
+    // If no threats → done
+    if (threats.length === 0) return;
+    
+    // Attach finding visually to the header
+    const referenceElement =
+      document.querySelector('.gD') ||
+      document.querySelector('[data-test-id="message-view-sender-email"]') ||
+      document.body;
+    
+    this.addFinding(referenceElement, threats, `From: ${fromText}\nReply-To: ${replyToText}`, this.getHighestSeverity(threats.map(t => t.severity)));
   },
   
   // Display scan results
