@@ -130,6 +130,7 @@ const EXR = {
     this.scanForZeroWidthChars(emailBody);
     this.scanForSuspiciousImages(emailBody);
     this.scanForUnsubscribeSpoof(emailBody);
+    this.scanForSuspiciousAttachments(emailBody);
     await this.scanForReplyToSpoofing();
     
     // Display results
@@ -766,7 +767,92 @@ const EXR = {
       }
     });
   },
-
+  
+  // Detection: Suspicious attachment links
+  scanForSuspiciousAttachments(container) {
+    const emailService = this.detectEmailService();
+    
+    // Yahoo Mail uses data-test-id attributes
+    let attachmentElements = [];
+    
+    if (emailService === 'yahoo') {
+      // Yahoo: Find all attachment items
+      attachmentElements = document.querySelectorAll('[data-test-id="attachment-item"], [data-test-id="attachment-details"]');
+    } else if (emailService === 'gmail') {
+      // Gmail attachments (keeping for future Gmail support)
+      const emailContainer = document.querySelector('.nH.if');
+      if (emailContainer) {
+        attachmentElements = emailContainer.querySelectorAll('.aZo, [download], a[href*="attachment"]');
+      }
+    }
+    
+    attachmentElements.forEach(element => {
+      // Get filename from title, aria-label, or text content
+      let filename = element.getAttribute('title') || 
+                      element.getAttribute('aria-label') || 
+                      element.textContent.trim();
+      
+      // Clean up filename - remove file size info (e.g., "52.2 KB")
+      // filename = filename.split(/\s*[·,]\s*/)[0].trim();
+      
+      const threats = [];
+      
+      if (!filename) return;
+      
+      // Dangerous file extensions
+      const dangerousExts = ['.exe', '.scr', '.bat', '.cmd', '.com', '.pif', '.vbs', '.js', '.jar', '.apk', '.msi'];
+      if (dangerousExts.some(ext => filename.toLowerCase().endsWith(ext))) {
+        threats.push({
+          type: 'suspicious-attachment',
+          reason: `Dangerous file extension (${filename.split('.').pop()})`,
+          severity: this.SEVERITY.CRITICAL
+        });
+      }
+      
+      // Double extension trick (e.g., invoice.pdf.exe)
+      const extensionCount = (filename.match(/\./g) || []).length;
+      if (extensionCount >= 2 && !filename.match(/\.(tar\.gz|tar\.bz2)$/i)) {
+        threats.push({
+          type: 'suspicious-attachment',
+          reason: 'Multiple file extensions (possible disguise)',
+          severity: this.SEVERITY.WARNING
+        });
+      }
+      
+      // Gibberish/random filename pattern
+      if (filename.length > 10) {
+        const nameWithoutExt = filename.replace(/\.[^.]+$/, '');
+        const hasVowels = /[aeiou]/i.test(nameWithoutExt);
+        const isAllCaps = nameWithoutExt === nameWithoutExt.toUpperCase() && /[A-Z]/.test(nameWithoutExt);
+        const hasNumbers = /\d{3,}/.test(nameWithoutExt);
+        
+        if (!hasVowels || (isAllCaps && hasNumbers)) {
+          threats.push({
+            type: 'suspicious-attachment',
+            reason: 'Random/gibberish filename pattern',
+            severity: this.SEVERITY.WARNING
+          });
+        }
+      }
+      
+      // Suspicious attachment names (common phishing patterns)
+      const phishyNames = ['invoice', 'receipt', 'statement', 'payment', 'urgent', 'verify', 
+                          'confirm', 'suspended', 'locked', 'security', 'alert', 'notification'];
+      const lowerFilename = filename.toLowerCase();
+      if (phishyNames.some(name => lowerFilename.includes(name))) {
+        threats.push({
+          type: 'suspicious-attachment',
+          reason: 'Common phishing attachment name pattern',
+          severity: this.SEVERITY.INFO
+        });
+      }
+      
+      if (threats.length > 0) {
+        this.addFinding(element, threats, `Attachment: ${filename}`, this.getHighestSeverity(threats.map(t => t.severity)));
+      }
+    });
+  },
+  
   // Detection: Reply-To spoofing
   async scanForReplyToSpoofing() {
     const emailService = this.detectEmailService();
