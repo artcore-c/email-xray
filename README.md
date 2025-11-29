@@ -260,23 +260,11 @@ Finds:
 - Tiny iframes (< 10x10px)
 - Hidden iframes with suspicious sources
 
-## Security & Privacy
-
-🔒 **100% Local Processing**: All scans happen in your browser. No data is sent to external servers.
-
-🔒 **Minimal Permissions**: Only requests access to Gmail and Yahoo Mail domains.
-
-🔒 **No Data Collection**: We don't collect, store, or transmit any of your email data.
-
-🔒 **Content Security Policy**: Strict CSP prevents code injection.
-
-🔒 **Open Source**: Full code available for audit and review.
-
 ## Browser Compatibility
 
-- ✅ Chrome 88+
-- ✅ Chromium-based browsers (Edge, Brave, Opera)
-- ✅ macOS, Windows, Linux
+- Chrome 88+
+- Chromium-based browsers (Edge, Brave, Opera)
+- MacOS, Windows, Linux
 
 ## Limitations
 
