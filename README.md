@@ -8,7 +8,7 @@
 
 ## Overview
 
-Email X-Ray is a security-focused Chrome extension for MacOS that helps you detect sophisticated phishing tactics used by attackers to hide malicious content in emails. It scans emails in real-time and highlights suspicious elements that might otherwise go unnoticed.
+Email X-Ray is a security-focused Chrome extension that helps you detect sophisticated phishing tactics used by attackers to hide malicious content in emails. It scans emails in real-time and highlights suspicious elements that might otherwise go unnoticed.
 
 ### What It Detects
 
@@ -67,10 +67,13 @@ Press **⌘+⇧+X** (Mac) or **Ctrl+Shift+X** (Windows/Linux) while viewing an e
 ### Understanding Results
 
 The extension displays findings in three severity levels:
-
-- 🔴 **CRITICAL**: Immediate security concern (hidden iframes, invisible text with suspicious content)
-- 🟠 **WARNING**: Potentially suspicious (tracking pixels, unusual formatting)
-- 🔵 **INFO**: Informational (minor anomalies worth noting)
+```
+ 🔴 CRITICAL: Immediate security concern (hidden iframes, invisible text with suspicious content
+ 
+ 🟠 WARNING: Potentially suspicious (tracking pixels, unusual formatting)
+ 
+ 🔵 INFO: Informational (minor anomalies worth noting)
+ ```
 
 ### Interacting with Results
 
