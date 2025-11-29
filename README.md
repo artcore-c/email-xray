@@ -220,4 +220,4 @@ Created by Robert - [YouTube Tutorials](#) (coming soon)
 
 ---
 
-**⚠️ Security Notice**: If you discover a security vulnerability, please contact your email provider instead of opening a public issue.
+**⚠️ Security Notice**: If you discover a security vulnerability, please contact security@example.com instead of opening a public issue.
