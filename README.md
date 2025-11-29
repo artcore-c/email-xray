@@ -312,15 +312,6 @@ The extension showing hidden CSS in a phishing email,
 highlighting suspicious elements and providing detailed analysis in 
 the results panel.
 
-## Roadmap
-
-- [ ] Support for additional webmail platforms (Outlook.com, ProtonMail)
-- [ ] Configurable sensitivity levels
-- [ ] Automatic scanning on email open
-- [ ] Machine learning-based threat detection
-- [ ] Browser notification alerts
-- [ ] Threat intelligence integration
-
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
