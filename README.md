@@ -332,7 +332,7 @@ Email X-Ray is a tool to assist in identifying potential phishing attempts. It i
 
 ## Author
 
-Created by Robert - [YouTube Tutorials](#) (coming soon)
+Created by Unicorn-1 - [YouTube Tutorials](https://www.youtube.com/@3DCharacterArt) (coming soon)
 
 ## Acknowledgments
 
@@ -342,4 +342,15 @@ Created by Robert - [YouTube Tutorials](#) (coming soon)
 
 ---
 
-**⚠️ Security Notice**: If you discover a security vulnerability, please contact security@example.com instead of opening a public issue.
+**⚠️ Security Notice**: 
+
+Email X-Ray is a detection tool, not a protection layer. It helps identify suspicious patterns but cannot guarantee complete safety. The extension may miss sophisticated attacks or flag legitimate content (false positives/negatives are possible with heuristic detection).
+#### Best Practices:
+
+- Never click links or download attachments from suspicious emails, even after scanning
+- Remember that hidden elements may exist beneath visible content - avoid clicking anywhere in flagged emails
+- If the extension detects threats, report the email to your email provider's spam/phishing system
+- For emails impersonating legitimate companies, report directly to that company's official abuse/security contact
+- Use Email X-Ray as one tool in a broader security strategy, not as your only defense
+
+The extension runs entirely in your browser and sends no data externally. All code is open-source and auditable in this repository.
