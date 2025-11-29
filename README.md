@@ -8,29 +8,52 @@
 
 ## Overview
 
-Email X-Ray is a security-focused Chrome extension that helps you detect sophisticated phishing tactics used by attackers to hide malicious content in emails. It scans emails in real-time and highlights suspicious elements that might otherwise go unnoticed.
+Email X-Ray is a security-focused Chrome extension that helps you detect sophisticated phishing 
+tactics used by attackers to hide malicious content in emails. It scans emails in real-time and 
+highlights suspicious elements that might otherwise go unnoticed.
 
-### What It Detects
+It can detect many of the latest phishing tactics that try to deceive users through visual 
+manipulation and technical trickery. The extension examines the email's HTML and CSS to 
+find content that's hidden from view, links that don't go where they claim, and other 
+suspicious patterns commonly used in phishing attacks.
 
-- **Hidden Text**: 0px font size, transparent text, off-screen positioning
-- **Tracking Pixels**: 1x1 invisible images used for tracking
-- **Suspicious Links**: Data URLs, JavaScript URLs, URL mismatches
-- **Homograph Attacks**: Lookalike Unicode characters in URLs
-- **Invisible iFrames**: Hidden credential harvesting attempts
-- **Zero-Width Characters**: Invisible Unicode characters
-- **Suspicious Image Metadata**: Long alt text on hidden images
-- **Color Camouflage**: Text color matching background
+### Detection Capabilities:
 
-## Features
+**Hidden content detection** looks for text that's been made invisible through CSS 
+manipulation. This includes setting font sizes to zero, making text completely transparent, 
+positioning it thousands of pixels off-screen, or using CSS filters and blend modes to render 
+it invisible. The scanner also catches color camouflage where text is the same color as the 
+background, and detects when clip-path masking is used to hide portions of content.
 
-✅ **Real-time Scanning**: Analyze emails on-demand with one click  
-✅ **Severity Levels**: Critical, Warning, and Info classifications  
-✅ **Visual Highlighting**: Color-coded threats directly in the email  
-✅ **Detailed Reports**: See exactly what was detected and why  
-✅ **Export Results**: Save scan results as JSON for documentation  
-✅ **Keyboard Shortcut**: Quick scan with ⌘+⇧+X (Cmd+Shift+X)  
-✅ **Privacy-First**: All scanning happens locally, no data leaves your browser  
-✅ **Gmail & Yahoo Mail**: Supports both major webmail platforms  
+**Tracking and surveillance** techniques are identified by scanning for tiny 1x1 pixel images, 
+SVG elements with zero dimensions, and CSS background images on hidden elements. 
+Modern phishing emails often use SVG-based tracking with remote image references that 
+phone home when the email is opened.
+
+**Link analysis** examines every URL in the email, checking for data URLs that can hide 
+malicious content, JavaScript URLs that execute code, and mismatches between what a link 
+displays and where it actually points. The extension analyzes domain names for excessive 
+dashes, long random number sequences, suspicious top-level domains like .top or .xyz, and 
+brand impersonation patterns where a legitimate company name appears in a fraudulent domain.
+
+**Unicode-based attacks** are caught by detecting confusable characters—lookalike letters 
+from different alphabets like Cyrillic or Greek that can make "paypal.com" look legitimate 
+while actually being "paypaӏ.com". The scanner checks for punycode domains and uses 
+Unicode normalization to catch sophisticated substitution attacks. It also finds zero-width 
+invisible characters that can be used to hide tracking codes or manipulate displayed text.
+
+**Email header analysis** examines the reply-to address and compares it against the sender. 
+Phishing emails often spoof a legitimate sender but set replies to go to a different address, or 
+claim to be from a corporate domain while directing replies to a free Gmail or Yahoo account.
+
+**Attachment inspection** flags files with dangerous extensions like .exe or .scr, double-
+extension tricks like "invoice.pdf.exe", and gibberish filenames with no vowels or all caps 
+with numbers. It also notes when attachments use common phishing keywords like 
+"invoice", "urgent", or "verify".
+
+**Additional patterns** include detecting invisible iframes that could harvest credentials, 
+finding fake unsubscribe mechanisms that use JavaScript or suspicious domains, and 
+identifying suspicious image metadata like extremely long alt text on hidden images.
 
 ## Installation
 
