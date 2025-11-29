@@ -55,6 +55,123 @@ with numbers. It also notes when attachments use common phishing keywords like
 finding fake unsubscribe mechanisms that use JavaScript or suspicious domains, and 
 identifying suspicious image metadata like extremely long alt text on hidden images.
 
+---
+## Detection Methods
+### 1. Hidden Text Detection
+**Scans for CSS-based text hiding techniques:**
+
+Font size manipulation (0px, <1px)
+Opacity levels (0 or near-transparent <0.1)
+CSS visibility/display properties (display: none, visibility: hidden)
+CSS filters (brightness(0%), blur())
+Mix-blend-mode concealment
+Color camouflage (text color matches background within 40 RGB difference)
+Off-screen positioning (text-indent < -100px, absolute/fixed positioning)
+Clip-path masking
+
+### 2. Tracking Pixel Detection
+**Identifies tracking mechanisms:**
+
+Traditional 1x1 or 2x2 pixel images
+SVG elements with zero dimensions but active viewBox
+Remote SVG <image> references to tracking servers
+CSS background-image on hidden elements (width/height ≤2px, display:none, opacity:0)
+
+### 3. Suspicious Link Analysis
+**Examines URLs for phishing indicators:**
+
+Data URLs (data:) that can hide malicious content
+JavaScript URLs (javascript:) for XSS attempts
+URL/text mismatches (displayed URL differs from href)
+Punycode domains (xn--) for IDN homograph attacks
+Excessive dashes (---) in domains
+Long numeric sequences (6+ digits, likely auto-generated)
+Suspicious TLDs (.top, .xyz, .click, .link, .tk, .ml, etc.)
+Excessive subdomain depth (>5 levels)
+Brand impersonation (brand name in wrong position)
+@ symbol obfuscation in URLs
+
+### 4. Homograph Attack Detection
+**Detects Unicode character substitution:**
+
+Confusable character mapping (Cyrillic, Greek lookalikes)
+NFKC Unicode normalization for sophisticated attacks
+Tracks 12 confusable character sets (a/а, e/е, o/о, etc.)
+
+### 5. Invisible iFrame Detection
+**Finds hidden credential harvesting:**
+
+Hidden iframes (display: none, visibility: hidden, opacity: 0)
+Tiny iframes (<10x10 pixels)
+
+### 6. Zero-Width Character Detection
+**Scans for invisible Unicode characters:**
+
+Zero-width space (U+200B)
+Zero-width non-joiner (U+200C)
+Zero-width joiner (U+200D)
+Zero-width no-break space (U+FEFF)
+Word joiner (U+2060)
+And 6 other invisible Unicode variants
+
+### 7. Suspicious Image Analysis
+**Examines image metadata:**
+
+Long alt text (>200 chars) on hidden/tiny images
+Zero-width characters in alt attributes
+
+### 8. Suspicious Attachment Detection
+**Identifies malicious file downloads:**
+
+Dangerous extensions (.exe, .scr, .bat, .cmd, .vbs, .js, .jar, .apk, .msi)
+Double extension tricks (file.pdf.exe)
+Gibberish filenames (no vowels, all caps with numbers)
+Common phishing names (invoice, urgent, verify, payment, etc.)
+External hosting (not on Gmail/Yahoo servers)
+
+### 9. Unsubscribe Link Spoofing
+**Detects fake unsubscribe mechanisms:**
+
+JavaScript unsubscribe links
+Data URL unsubscribe forms
+Suspicious TLDs in unsubscribe links
+Embedded forms in email body (legitimate emails use links)
+
+### 10. Reply-To Spoofing
+**Identifies email header manipulation:**
+
+Domain mismatch (FROM vs REPLY-TO)
+No-reply sender but replies enabled
+Corporate sender with free email reply-to (Gmail/Yahoo/Outlook)
+
+### 11. Enhanced CSS Techniques
+**Advanced hiding methods:**
+
+Backdrop-filter detection
+Complex filter chains
+Blend mode analysis
+
+---
+## Extension Features
+
+**Scan Trigger:** Click extension icon or use keyboard shortcut `(Cmd/Ctrl+Shift+X)`
+
+### Export Capability: 
+
+**JSON export** with structured findings data including element tags, classes, and threat details
+
+### Privacy Architecture:
+
+**100% local processing** - no network requests
+
+No data collection or external API calls
+
+Minimal permissions (activeTab, storage)
+
+Host permissions limited to mail.google.com and mail.yahoo.com only
+
+**Platform Support:** Gmail and Yahoo Mail (desktop web versions)
+
 ## Installation
 
 ### Install from Source (Development)
