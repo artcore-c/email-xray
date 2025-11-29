@@ -62,11 +62,11 @@ identifying suspicious image metadata like extremely long alt text on hidden ima
 
 - Font size manipulation (0px, <1px)
 - Opacity levels (0 or near-transparent <0.1)
-- CSS visibility/display properties (display: none, visibility: hidden)
-- CSS filters (brightness(0%), blur())
+- CSS visibility/display properties (`display: none`, `visibility: hidden`)
+- CSS filters (`brightness(0%)`, `blur()`)
 - Mix-blend-mode concealment
 - Color camouflage (text color matches background within 40 RGB difference)
-- Off-screen positioning (text-indent < -100px, absolute/fixed positioning)
+- Off-screen positioning (`text-indent < -100px`, absolute/fixed positioning)
 - Clip-path masking
 
 ### 2. Tracking Pixel Detection
@@ -74,17 +74,17 @@ identifying suspicious image metadata like extremely long alt text on hidden ima
 
 - Traditional 1x1 or 2x2 pixel images
 - SVG elements with zero dimensions but active viewBox
-- Remote SVG <image> references to tracking servers
+- Remote SVG `<image>` references to tracking servers
 - CSS background-image on hidden elements (width/height ≤2px, display:none, opacity:0)
 
 ### 3. Suspicious Link Analysis
 **Examines URLs for phishing indicators:**
 
-- Data URLs (data:) that can hide malicious content
-- JavaScript URLs (javascript:) for XSS attempts
+- Data URLs (`data:`) that can hide malicious content
+- JavaScript URLs (`javascript:`) for XSS attempts
 - URL/text mismatches (displayed URL differs from href)
-- Punycode domains (xn--) for IDN homograph attacks
-- Excessive dashes (---) in domains
+- Punycode domains (`xn--`) for IDN homograph attacks
+- Excessive dashes (`---`) in domains
 - Long numeric sequences (6+ digits, likely auto-generated)
 - Suspicious TLDs (.top, .xyz, .click, .link, .tk, .ml, etc.)
 - Excessive subdomain depth (>5 levels)
@@ -101,7 +101,7 @@ identifying suspicious image metadata like extremely long alt text on hidden ima
 ### 5. Invisible iFrame Detection
 **Finds hidden credential harvesting:**
 
-- Hidden iframes (display: none, visibility: hidden, opacity: 0)
+- Hidden iframes (`display: none`, `visibility: hidden`, `opacity: 0`)
 - Tiny iframes (<10x10 pixels)
 
 ### 6. Zero-Width Character Detection
