@@ -152,7 +152,7 @@ identifying suspicious image metadata like extremely long alt text on hidden ima
 - Blend mode analysis
 
 ---
-## Extension Features
+## Features
 
 **Scan Trigger:** Click extension icon or use keyboard shortcut `(Cmd/Ctrl+Shift+X)`
 
@@ -220,45 +220,6 @@ The extension displays findings in three severity levels:
 - **Click on a finding** in the panel to scroll to it in the email
 - **Click on highlighted elements** in the email to see detection details
 - **Export results** using the "Export Results (JSON)" button for documentation
-
-## How It Works
-
-Email X-Ray uses several detection techniques:
-
-### 1. CSS Analysis
-Examines computed styles to find:
-- Font size: 0px or < 2px
-- Opacity: 0 or near-zero
-- Display/visibility: hidden elements
-- Color matching: text color ≈ background color
-- Positioning: off-screen elements
-
-### 2. Unicode Analysis
-Detects invisible characters:
-- Zero-width spaces (U+200B)
-- Zero-width non-joiners (U+200C)
-- Zero-width joiners (U+200D)
-- Word joiners (U+2060)
-- Other invisible Unicode characters
-
-### 3. Homograph Detection
-Identifies lookalike characters:
-- Cyrillic 'а' (U+0430) vs Latin 'a' (U+0061)
-- Greek 'ο' (U+03BF) vs Latin 'o' (U+006F)
-- And 50+ other confusable character pairs
-
-### 4. Link Analysis
-Checks for:
-- `data:` URLs (can contain encoded payloads)
-- `javascript:` URLs (XSS vectors)
-- URL vs display text mismatches
-- Punycode (xn--) domains
-
-### 5. Tracking Detection
-Finds:
-- 1x1 pixel images
-- Tiny iframes (< 10x10px)
-- Hidden iframes with suspicious sources
 
 ## Browser Compatibility
 
