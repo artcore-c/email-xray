@@ -67,13 +67,13 @@ Press **⌘+⇧+X** (Mac) or **Ctrl+Shift+X** (Windows/Linux) while viewing an e
 ### Understanding Results
 
 The extension displays findings in three severity levels:
-```
- 🔴 CRITICAL: Immediate security concern (hidden iframes, invisible text with suspicious content)
+
+🔴 **CRITICAL:** Immediate security concern (hidden iframes, invisible text with suspicious content)
  
- 🟠 WARNING: Potentially suspicious (tracking pixels, unusual formatting)
+🟠 **WARNING:** Potentially suspicious (tracking pixels, unusual formatting)
  
- 🔵 INFO: Informational (minor anomalies worth noting)
- ```
+🔵 **INFO:** Informational (minor anomalies worth noting)
+ 
 
 ### Interacting with Results
 
