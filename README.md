@@ -47,8 +47,8 @@ invisible characters that can be used to hide tracking codes or manipulate displ
 Phishing emails often spoof a legitimate sender but set replies to go to a different address, or 
 claim to be from a corporate domain while directing replies to a free Gmail or Yahoo account.
 
-**Attachment inspection** flags files with dangerous extensions like .exe or .scr, double-
-extension tricks like "invoice.pdf.exe", and gibberish filenames with no vowels or all caps 
+**Attachment inspection** flags files with dangerous extensions like .exe or .scr, double-extension 
+tricks like "invoice.pdf.exe", and gibberish filenames with no vowels or all caps 
 with numbers. It also notes when attachments use common phishing keywords like 
 "invoice", "urgent", or "verify".
 
