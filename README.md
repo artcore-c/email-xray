@@ -172,6 +172,15 @@ Host permissions limited to mail.google.com and mail.yahoo.com only
 
 **Platform Support:** Gmail and Yahoo Mail (desktop web versions)
 
+## Prerequisites
+
+### Download and install latest Chrome (or any Chromium-based browser, eg. Edge, Brave, Opera)
+```zsh
+curl -L "https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg" -o ~/Downloads/googlechrome.dmg
+open ~/Downloads/googlechrome.dmg
+```
+**Recommended: Use the latest version of your browser for best compatibility and security**
+
 ## Installation
 
 ### Install from Source (Development)
@@ -229,7 +238,7 @@ The extension displays findings in three severity levels:
 
 ## Limitations
 
-- Only works on Gmail and Yahoo Mail web interfaces
+- Intended for use with Gmail and Yahoo Mail web interfaces only
 - Cannot scan emails in native mail clients
 - Some detection methods are heuristic-based (may have false positives/negatives)
 - Attachments are not scanned (only email body content)
