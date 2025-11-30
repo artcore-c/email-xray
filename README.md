@@ -37,8 +37,9 @@ dashes, long random number sequences, suspicious top-level domains like .top or 
 brand impersonation patterns where a legitimate company name appears in a fraudulent domain.
 
 **Unicode-based attacks** are caught by detecting confusable characters—lookalike letters 
-from different alphabets like Cyrillic or Greek that can make "paypal.com" look legitimate 
-while actually being "paypaӏ.com". The scanner checks for punycode domains and uses 
+from different alphabets like Cyrillic or Greek. For example, a Cyrillic 'а' (U+0430) 
+looks identical to Latin 'a' (U+0061) but is a different character, allowing attackers 
+to create domains like "pаypal.com" that appear legitimate. The scanner checks for punycode domains and uses 
 Unicode normalization to catch sophisticated substitution attacks. It also finds zero-width 
 invisible characters that can be used to hide tracking codes or manipulate displayed text.
 
