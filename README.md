@@ -39,14 +39,9 @@ dashes, long random number sequences, suspicious top-level domains like .top or 
 brand impersonation patterns where a legitimate company name appears in a fraudulent domain.
 
 **Unicode-based attacks** are caught by detecting confusable characters—lookalike letters 
-<<<<<<< HEAD
-from different alphabets like Cyrillic or Greek that can make "paypal.com" look legitimate 
-while actually being "paypaӏ.com". The scanner checks for punycode domains and uses 
-=======
 from different alphabets like Cyrillic or Greek. For example, a Cyrillic 'а' (U+0430) 
 looks identical to Latin 'a' (U+0061) but is a different character, allowing attackers 
 to create domains like "pаypal.com" that appear legitimate. The scanner checks for punycode domains and uses 
->>>>>>> ad66c77aeaa1b1792962d515c10db8e3894cd1d1
 Unicode normalization to catch sophisticated substitution attacks. It also finds zero-width 
 invisible characters that can be used to hide tracking codes or manipulate displayed text.
 
@@ -54,13 +49,8 @@ invisible characters that can be used to hide tracking codes or manipulate displ
 Phishing emails often spoof a legitimate sender but set replies to go to a different address, or 
 claim to be from a corporate domain while directing replies to a free Gmail or Yahoo account.
 
-<<<<<<< HEAD
-**Attachment inspection** flags files with dangerous extensions like .exe or .scr, double-
-extension tricks like "invoice.pdf.exe", and gibberish filenames with no vowels or all caps 
-=======
 **Attachment inspection** flags files with dangerous extensions like .exe or .scr, double-extension 
 tricks like "invoice.pdf.exe", and gibberish filenames with no vowels or all caps 
->>>>>>> ad66c77aeaa1b1792962d515c10db8e3894cd1d1
 with numbers. It also notes when attachments use common phishing keywords like 
 "invoice", "urgent", or "verify".
 
@@ -289,11 +279,7 @@ Test on sample phishing emails or create test cases with:
 
 ### Detection in Action
 
-<<<<<<< HEAD
 ![Email X-Ray detecting hidden content in spam email](screenshots/demo_01.jpg)
-=======
-![Email X-Ray detecting hidden content in spam email](demo_01.jpg)
->>>>>>> ad66c77aeaa1b1792962d515c10db8e3894cd1d1
 
 The extension showing hidden CSS in a phishing email, 
 highlighting suspicious elements and providing detailed analysis in 
