@@ -144,8 +144,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [Unreleased]: https://github.com/artcore-c/email-xray/compare/v1.1.0...HEAD
 [1.1.0]: https://github.com/artcore-c/email-xray/compare/v1.0.0...v1.1.0
-<<<<<<< HEAD
 [1.0.0]: https://github.com/artcore-c/email-xray/releases/tag/v1.0.0
-=======
-[1.0.0]: https://github.com/artcore-c/email-xray/releases/tag/v1.0.0
->>>>>>> ad66c77aeaa1b1792962d515c10db8e3894cd1d1
+
