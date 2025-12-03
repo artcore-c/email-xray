@@ -1,6 +1,8 @@
 # 🔍 Email X-Ray
 
 **A Chrome extension to detect hidden text in email**
+![email-xray](https://github.com/user-attachments/assets/86039a72-053b-478b-8138-a1eed9dfc415)
+
 
 [![Version](https://img.shields.io/badge/version-1.1.0-blue)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
