@@ -205,7 +205,7 @@ open ~/Downloads/googlechrome.dmg
 
 ## Usage
 
-### Basic Scanning
+### Scanning Email
 
 1. **Open an email** in Gmail or Yahoo Mail
 2. **Click the Email X-Ray icon** in your Chrome toolbar
