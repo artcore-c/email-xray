@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey)](#prerequisites)
 
-![email-xray](https://github.com/user-attachments/assets/86039a72-053b-478b-8138-a1eed9dfc415)
+![email-xray](banner/email-xray.jpg)
 
 ## Overview
 
