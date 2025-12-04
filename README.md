@@ -286,7 +286,7 @@ highlighting suspicious elements and providing detailed analysis in
 the results panel.
 
 ![Email X-Ray detecting suspicious attachment in email](screenshots/demo_02.jpg)
-The extension showing potentially malicious attachment.
+The extension showing a potentially malicious attachment.
 
 ## Contributing
 
