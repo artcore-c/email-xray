@@ -284,9 +284,17 @@ Test on sample phishing emails or create test cases with:
 The extension showing hidden CSS in a phishing email, 
 highlighting suspicious elements and providing detailed analysis in 
 the results panel.
+---
 
 ![Email X-Ray detecting suspicious attachment in email](screenshots/demo_02.jpg)
-The extension showing a potentially malicious attachment.
+Attachment analysis revealing a potentially malicious file attachment.
+---
+
+![Multiple threat detection in phishing email](screenshots/demo_03.jpg)
+
+Comprehensive scan revealing brand impersonation with phony links, multiple 
+tracking pixels (1x1 images), and homograph attacks using confusable Unicode 
+characters.
 
 ## Contributing
 
