@@ -265,7 +265,7 @@ email-xray/
 
 ### Building
 
-No build process required. The extension runs directly from source files.
+Absolutely No build process required. The extension runs directly from source files.
 
 ### Testing
 
