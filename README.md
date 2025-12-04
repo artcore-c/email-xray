@@ -277,25 +277,20 @@ Test on sample phishing emails or create test cases with:
 
 ## Screenshots
 
-### Detection in Action
+### ![Email X-Ray Icon](icons/icon48.png) > Detection in Action
 
 ![Email X-Ray detecting hidden content in email](screenshots/demo_01.jpg)
-
-### The extension showing hidden CSS in a phishing email, 
-### highlighting suspicious elements and providing detailed analysis in 
-### the results panel.
----
+The extension showing hidden CSS in a phishing email, 
+highlighting suspicious elements and providing detailed analysis in 
+the results panel.
 
 ![Email X-Ray detecting suspicious attachment in email](screenshots/demo_02.jpg)
-### Attachment analysis revealing a potentially malicious file attachment.
----
+Attachment analysis revealing a potentially malicious file attachment.
 
 ![Multiple threat detection in phishing email](screenshots/demo_03.jpg)
-
-### Comprehensive scan revealing brand impersonation with phony links, multiple 
-### tracking pixels (1x1 images), and homograph attacks using confusable Unicode 
-### characters.
----
+Comprehensive scan revealing brand impersonation with phony links, multiple 
+tracking pixels (1x1 images), and homograph attacks using confusable Unicode 
+characters.
 
 ## Contributing
 
