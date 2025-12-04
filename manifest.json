@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Email X-Ray",
   "description": "Detect hidden phishing tactics in emails: invisible text, tracking pixels, homograph attacks, and suspicious metadata.",
-  "version": "1.0.0",
+  "version": "1.1.8",
   "author": "Robert Hall",
   
   "permissions": [

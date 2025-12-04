@@ -5,6 +5,18 @@ All notable changes to Email X-Ray will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.8] - 2024-12-03
+
+### Added
+- New extension icons with improved visibility at small scales
+- demo_02.jpg: Malicious attachment detection example
+- demo_03.jpg: Multiple threat types (tracking pixels, brand impersonation, homograph attacks)
+- Expanded screenshot descriptions in README
+- Organized assets into banner/ and screenshots/ directories
+
+### Changed
+- Redesigned icons for better Chrome toolbar visibility
+
 ## [1.1.0] - 2024-11-29
 
 ### Added
@@ -145,4 +157,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [Unreleased]: https://github.com/artcore-c/email-xray/compare/v1.1.0...HEAD
 [1.1.0]: https://github.com/artcore-c/email-xray/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/artcore-c/email-xray/releases/tag/v1.0.0
-

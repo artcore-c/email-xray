@@ -2,7 +2,7 @@
 
 **A Chrome extension to detect hidden text in email**
 
-[![Version](https://img.shields.io/badge/version-1.1.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.1.8-blue)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey)](#prerequisites)
 
@@ -265,7 +265,7 @@ email-xray/
 
 ### Building
 
-Absolutely No build process required. The extension runs directly from source files.
+No build process required. The extension runs directly from source files.
 
 ### Testing
 
