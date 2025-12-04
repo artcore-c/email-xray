@@ -279,11 +279,14 @@ Test on sample phishing emails or create test cases with:
 
 ### Detection in Action
 
-![Email X-Ray detecting hidden content in spam email](screenshots/demo_01.jpg)
+![Email X-Ray detecting hidden content in email](screenshots/demo_01.jpg)
 
 The extension showing hidden CSS in a phishing email, 
 highlighting suspicious elements and providing detailed analysis in 
 the results panel.
+
+![Email X-Ray detecting suspicious attachment in email](screenshots/demo_02.jpg)
+The extension showing potentially malicious attachment.
 
 ## Contributing
 
