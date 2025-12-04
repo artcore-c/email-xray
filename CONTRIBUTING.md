@@ -42,7 +42,7 @@ Feature requests are welcome! Please:
 3. **Make your changes**:
    - Follow the existing code style
    - Add comments for complex logic
-   - Test thoroughly
+   - Test
 
 4. **Commit your changes**:
    ```bash
@@ -152,11 +152,11 @@ When adding new detection methods:
 
 All contributions must:
 
-- ✅ Process data locally only
-- ✅ Not introduce external dependencies
-- ✅ Not make network requests from content scripts
-- ✅ Not access or transmit user data
-- ✅ Follow principle of least privilege
+- Process data locally only
+- Not introduce external dependencies
+- Not make network requests from content scripts
+- Not access or transmit user data
+- Follow principle of least privilege
 
 ## Documentation
 
