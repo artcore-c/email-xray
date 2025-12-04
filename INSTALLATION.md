@@ -119,12 +119,12 @@ To fully test the extension, create a test email with hidden content:
 
 A properly working installation should:
 
-✅ Display colored highlights on suspicious elements  
-✅ Show a detailed results panel  
-✅ Categorize findings by severity  
-✅ Allow clicking findings to scroll to them  
-✅ Enable export of results as JSON  
-✅ Work with keyboard shortcut  
+Display colored highlights on suspicious elements  
+Show a detailed results panel  
+Categorize findings by severity  
+Allow clicking findings to scroll to them  
+Enable export of results as JSON  
+Work with keyboard shortcut  
 
 ## Troubleshooting
 
@@ -218,10 +218,10 @@ Email X-Ray requests minimal permissions:
 - **host_permissions** (mail.google.com, mail.yahoo.com): To inject detection scripts
 
 The extension **does not**:
-- ❌ Access other websites
-- ❌ Send data to external servers
-- ❌ Access your browsing history
-- ❌ Modify emails or send emails
+- Access other websites
+- Send data to external servers
+- Access your browsing history
+- Modify emails or send emails
 
 ## Performance Notes
 
