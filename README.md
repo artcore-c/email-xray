@@ -311,8 +311,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 Email X-Ray is a tool to assist in identifying potential phishing attempts. It is not a guarantee of email safety and should be used as part of a comprehensive security strategy. Always exercise caution with suspicious emails.
 
 ## Author
-
-Created by Unicorn-1 
+Created by Unicorn-1
 
 [![Email X-Ray - Phishing Detection Showcase](https://img.youtube.com/vi/HFwb4tjEbTQ/maxresdefault.jpg)](https://youtu.be/HFwb4tjEbTQ)
 
