@@ -313,7 +313,7 @@ Email X-Ray is a tool to assist in identifying potential phishing attempts. It i
 ## Author
 Created by Unicorn-1
 
-[![Email X-Ray - Phishing Detection Showcase](https://img.youtube.com/vi/HFwb4tjEbTQ/maxresdefault.jpg)](https://youtu.be/HFwb4tjEbTQ)
+[![Email X-Ray - Phishing Detection Showcase](https://img.youtube.com/vi/9MMfn-by2wE/maxresdefault.jpg)](https://youtu.be/9MMfn-by2wE)
 
 ## Acknowledgments
 
