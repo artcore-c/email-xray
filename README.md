@@ -317,9 +317,7 @@ Created by Unicorn-1
 
 ## Acknowledgments
 
-- Inspired by the growing sophistication of email phishing attacks
-- Built with security and privacy as core principles
-- Designed for the security-conscious email user
+- **[Google Chrome](https://www.google.com/chrome/) / [Chromium](https://www.chromium.org/)** - The open browser platform providing the extension APIs leveraged by Email X-Ray
 
 ---
 
