@@ -317,7 +317,7 @@ Created by Unicorn-1
 
 ## Acknowledgments
 
-- **[Google Chrome](https://www.google.com/chrome/) / [Chromium](https://www.chromium.org/)** - The open browser platform providing the extension APIs leveraged by Email X-Ray
+- **[Google Chrome](https://www.google.com/chrome/) / [Chromium](https://www.chromium.org/)** - open browser platform providing the extension APIs leveraged by Email X-Ray
 
 ---
 
